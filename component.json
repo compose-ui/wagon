@@ -5,8 +5,6 @@
   "dependencies": {
     "lodash/lodash": "*"
   },
-  "paths": ["../"],
-  "local": ["trainman"],
   "scripts": [
     "index.js"
   ],
