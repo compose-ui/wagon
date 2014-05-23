@@ -1,0 +1,31 @@
+{
+  "name": "wagon",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "zuul --phantom -- test/*.test.js",
+    "pretest": "component install"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "component": "^0.19.9",
+    "bean": "^1.0.6",
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "mocha": "^1.19.0",
+    "zuul": "^1.6.5",
+    "chai": "^1.9.1",
+    "domify": "^1.2.2",
+    "phantomjs": "^1.9.7-7"
+  },
+  "browser": {
+    "lodash": "lodash",
+    "trainman": "trainman-component",
+    "bean": "bean",
+    "chai": "chai",
+    "domify": "domify"
+  }
+}
