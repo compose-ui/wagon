@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "repo": "compose-ui/wagon",
   "dependencies": {
-    "lodash/lodash": "*"
+    "lodash/lodash": "*",
+    "fat/bean": "*"
   },
   "scripts": [
     "index.js"
