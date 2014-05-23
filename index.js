@@ -27,7 +27,7 @@ Wagon.prototype.delegateEvents = function(masterSelector, events){
   for (var key in events) {
     var method = events[key]
     if (!_.isFunction(method)) method = this[events[key]]
-    if (!method) continue
+    if (!method) throw new Error('Event handler '+ key + ' not found.')
 
     var match = key.match(delegateEventSplitter)
     var eventName = match[1], selector = (match[2] || mainSelector)
