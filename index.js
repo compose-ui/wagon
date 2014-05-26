@@ -17,28 +17,16 @@ function Wagon(options){
 }
 
 Wagon.prototype.initialize = noop
-
-Wagon.prototype.delegateEvents = function(){
-  this.delegateElEvents()
-  return this
-}
-
-Wagon.prototype.delegateElEvents = function(events){
+Wagon.prototype.delegateEvents = function(events){
   if (!(events || (events = _.result(this, 'events'))))
     return this
 
-  this.undelegateElEvents(this.el)
-
+  this.undelegateEvents()
   return eventDelegator.call(this, this.el, events)
 }
 
-Wagon.prototype.undelegateElEvents = function(el){
-  bean.off(el, '.' + this.cid)
-  return this
-}
-
 Wagon.prototype.undelegateEvents = function(){
-  this.undelegateElEvents(this.el)
+  bean.off(this.el, '.' + this.cid)
   return this
 }
 
@@ -92,13 +80,16 @@ function extend(protoProps, staticProps){
 function eventDelegator(el, events){
   for (var key in events) {
     var method = events[key]
-    if (!_.isFunction(method)) method = this[events[key]]
-    if (!method) throw new Error('Event handler '+ key + ' not found.')
+    if (!_.isFunction(method))
+      method = this[events[key]]
+    if (!method)
+      throw new Error('Event handler '+ key + ' not found.')
 
     var match = key.match(delegateEventSplitter)
     var eventName = match[1], selector = match[2]
     method = _.bind(method, this)
 
+    // Support CSS animation events
     if (eventName.indexOf('animation') === 0) {
       cssEventName = cssAnimEventTypes[eventName.replace('animation', 0)]
       if (!cssEventName)
@@ -112,10 +103,13 @@ function eventDelegator(el, events){
 
     if (selector) {
       bean.on(el, eventName, selector, method)
+      // Handle tap
       if (eventName === 'click')
         bean.on(el, eventName, selector, tap(method))
+    
     } else {
       bean.on(el, eventName, method)
+      // Handle tap
       if (eventName === 'click')
         bean.on(el, eventName, tap(method))
     }
