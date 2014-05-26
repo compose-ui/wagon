@@ -1,6 +1,7 @@
 var _ = require('lodash')
 var bean = require('bean')
 var tap = require('tap-event')
+var cssAnimEventTypes = require('css-animation-event-types')
 
 module.exports = Wagon
 
@@ -97,13 +98,27 @@ function eventDelegator(el, events){
     var match = key.match(delegateEventSplitter)
     var eventName = match[1], selector = match[2]
     method = _.bind(method, this)
+
+    if (eventName.indexOf('animation') === 0) {
+      cssEventName = cssAnimEventTypes[eventName.replace('animation', 0)]
+      if (!cssEventName)
+        throw new Error('Event ' + eventName + ' is not supported.')
+      else
+        eventName = cssEventName
+    }
+
     if (this.cid)
       eventName += '.' + this.cid
 
-    if (selector)
+    if (selector) {
       bean.on(el, eventName, selector, method)
-    else
+      if (eventName === 'click')
+        bean.on(el, eventName, selector, tap(method))
+    } else {
       bean.on(el, eventName, method)
+      if (eventName === 'click')
+        bean.on(el, eventName, tap(method))
+    }
   }
   return this
 }

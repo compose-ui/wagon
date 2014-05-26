@@ -5,7 +5,8 @@
   "dependencies": {
     "lodash/lodash": "*",
     "fat/bean": "*",
-    "component/tap-event": "*"
+    "component/tap-event": "*",
+    "kewah/css-animation-event-types": "*"
   },
   "scripts": [
     "index.js"

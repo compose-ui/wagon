@@ -23,10 +23,10 @@
   },
   "browser": {
     "lodash": "lodash",
-    "trainman": "trainman-component",
     "bean": "bean",
     "chai": "chai",
     "domify": "domify",
-    "tap-event": "./components/component-tap-event/index.js"
+    "tap-event": "./components/component-tap-event/index.js",
+    "css-animation-event-types": "./components/kewah-css-animation-event-types/index.js"
   }
 }
