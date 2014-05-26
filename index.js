@@ -16,9 +16,7 @@ function Wagon(options){
 
 Wagon.prototype.initialize = noop
 
-Wagon.prototype.delegateEvents = function(masterSelector, events){
-  if (!(masterSelector || (masterSelector = _.result(this, 'selector'))))
-    return this
+Wagon.prototype.delegateEvents = function(events){
   if (!(events || (events = _.result(this, 'events'))))
     return this
 

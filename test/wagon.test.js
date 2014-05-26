@@ -9,11 +9,11 @@ describe('wagon', function(){
     var buttonClicked = 0
     before(function(){
       SomeWagon = Wagon.extend({
-        selector: '.wagon',
         events: {
           'click button': 'clickButton'
         },
         initialize: function(){
+          this.el = domify('<div class="wagon"><button></button></div>')
           this.hotStuff = 'Wagon'
         },
         clickButton: function(event){
@@ -43,11 +43,9 @@ describe('wagon', function(){
     })
 
     describe('events binding', function(){
-      var html;
       before(function(){
-        html = domify('<div class="wagon"><button></button></div>')
-        document.body.appendChild(html)
-        bean.fire(html.querySelector('button'), 'click')
+        document.body.appendChild(someInstance.el)
+        bean.fire(someInstance.el.querySelector('button'), 'click')
       })
 
       it('triggers the events', function(){
