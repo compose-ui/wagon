@@ -26,6 +26,7 @@
     "trainman": "trainman-component",
     "bean": "bean",
     "chai": "chai",
-    "domify": "domify"
+    "domify": "domify",
+    "tap-event": "./components/component-tap-event/index.js"
   }
 }

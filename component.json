@@ -4,7 +4,8 @@
   "repo": "compose-ui/wagon",
   "dependencies": {
     "lodash/lodash": "*",
-    "fat/bean": "*"
+    "fat/bean": "*",
+    "component/tap-event": "*"
   },
   "scripts": [
     "index.js"

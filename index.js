@@ -1,5 +1,6 @@
 var _ = require('lodash')
 var bean = require('bean')
+var tap = require('tap-event')
 
 module.exports = Wagon
 
@@ -16,40 +17,43 @@ function Wagon(options){
 
 Wagon.prototype.initialize = noop
 
-Wagon.prototype.delegateEvents = function(events){
+Wagon.prototype.delegateEvents = function(){
+  this.delegateElEvents()
+  return this
+}
+
+Wagon.prototype.delegateElEvents = function(events){
   if (!(events || (events = _.result(this, 'events'))))
     return this
 
-  this.undelegateEvents()
+  this.undelegateElEvents(this.el)
 
-  for (var key in events) {
-    var method = events[key]
-    if (!_.isFunction(method)) method = this[events[key]]
-    if (!method) throw new Error('Event handler '+ key + ' not found.')
+  return eventDelegator.call(this, this.el, events)
+}
 
-    var match = key.match(delegateEventSplitter)
-    var eventName = match[1], selector = match[2]
-    method = _.bind(method, this)
-    eventName += '.' + this.cid
-
-    if (selector)
-      bean.on(this.el, eventName, selector, method)
-    else
-      bean.on(this.el, eventName, method)
-  }
+Wagon.prototype.undelegateElEvents = function(el){
+  bean.off(el, '.' + this.cid)
   return this
 }
 
 Wagon.prototype.undelegateEvents = function(){
-  bean.off(this.el, '.' + this.cid)
+  this.undelegateElEvents(this.el)
+  return this
 }
 
 Wagon.prototype.remove = function(){
   this.undelegateEvents()
   this.el.parentNode.removeChild(this.el)
+  return this
 }
 
-Wagon.extend = extend
+Wagon.extend = function(){
+  var child = extend.apply(this, arguments)
+  var docEvents = _.result(child, 'docEvents')
+  if (docEvents)
+    eventDelegator.call(child, document, docEvents)
+  return child
+}
 
 function extend(protoProps, staticProps){
   var parent = this;
@@ -82,4 +86,24 @@ function extend(protoProps, staticProps){
   child.__super__ = parent.prototype;
 
   return child;
+}
+
+function eventDelegator(el, events){
+  for (var key in events) {
+    var method = events[key]
+    if (!_.isFunction(method)) method = this[events[key]]
+    if (!method) throw new Error('Event handler '+ key + ' not found.')
+
+    var match = key.match(delegateEventSplitter)
+    var eventName = match[1], selector = match[2]
+    method = _.bind(method, this)
+    if (this.cid)
+      eventName += '.' + this.cid
+
+    if (selector)
+      bean.on(el, eventName, selector, method)
+    else
+      bean.on(el, eventName, method)
+  }
+  return this
 }

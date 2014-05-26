@@ -6,7 +6,7 @@ var bean = require('bean')
 describe('wagon', function(){
   describe('.extend', function(){
     var SomeWagon, someInstance;
-    var buttonClicked = 0
+    var buttonClicked = triggeredWagon = 0
     before(function(){
       SomeWagon = Wagon.extend({
         events: {
@@ -19,6 +19,14 @@ describe('wagon', function(){
         clickButton: function(event){
           event.preventDefault()
           buttonClicked++
+        }
+      }, {
+        docEvents: {
+          'click [data-trigger="wagon"]': 'triggerWagon'
+        },
+        triggerWagon: function(event){
+          event.preventDefault()
+          triggeredWagon++
         }
       })
       someInstance = new SomeWagon({yo: 'dawg'})
@@ -50,6 +58,18 @@ describe('wagon', function(){
 
       it('triggers the events', function(){
         assert.equal(buttonClicked, 1)
+      })
+    })
+
+    describe('document events binding', function(){
+      before(function(){
+        var html = domify('<a href="#" data-trigger="wagon">Wagon</a>')
+        document.body.appendChild(html)
+        bean.fire(html, 'click')
+      })
+
+      it('triggers the document event', function(){
+        assert.equal(triggeredWagon, 1)
       })
     })
   })
