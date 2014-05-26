@@ -30,27 +30,28 @@ Wagon.prototype.delegateEvents = function(masterSelector, events){
     if (!method) throw new Error('Event handler '+ key + ' not found.')
 
     var match = key.match(delegateEventSplitter)
-    var eventName = match[1], selector = (match[2] || mainSelector)
+    var eventName = match[1], selector = match[2]
     method = _.bind(method, this)
     eventName += '.' + this.cid
 
-    // Delegate on document
-    bean.on(document, eventName, selector, method)
+    if (selector)
+      bean.on(this.el, eventName, selector, method)
+    else
+      bean.on(this.el, eventName, method)
   }
   return this
 }
 
 Wagon.prototype.undelegateEvents = function(){
-  bean.off(document, 'click.' + this.cid)
+  bean.off(this.el, '.' + this.cid)
 }
 
 Wagon.prototype.remove = function(){
   this.undelegateEvents()
+  this.el.parentNode.removeChild(this.el)
 }
 
-Wagon.extend = function(){
-  return extend.apply(this, arguments)
-}
+Wagon.extend = extend
 
 function extend(protoProps, staticProps){
   var parent = this;
