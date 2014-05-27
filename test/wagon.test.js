@@ -1,5 +1,5 @@
 var assert = require('chai').assert
-var Wagon = require('../')
+var Wagon = require('wagon')
 var domify = require('domify')
 var bean = require('bean')
 

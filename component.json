@@ -8,6 +8,10 @@
     "component/tap-event": "*",
     "kewah/css-animation-event-types": "*"
   },
+  "development": {
+    "chaijs/chai": "*",
+    "component/domify": "*"
+  },
   "scripts": [
     "index.js"
   ],
