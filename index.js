@@ -77,8 +77,12 @@ function extend(protoProps, staticProps){
   return child;
 }
 
-function eventDelegator(el, events){
+function eventDelegator(el, events, type){
   for (var key in events) {
+    if (key === 'one') {
+      eventDelegator.call(this, el, events[key], 'one')
+      continue
+    }
     var method = events[key]
     if (!_.isFunction(method))
       method = this[events[key]]
@@ -101,17 +105,19 @@ function eventDelegator(el, events){
     if (this.cid)
       eventName += '.' + this.cid
 
+    var bindType = type ? type : 'on'
+
     if (selector) {
-      bean.on(el, eventName, selector, method)
+      bean[bindType](el, eventName, selector, method)
       // Handle tap
       if (eventName === 'click')
-        bean.on(el, eventName, selector, tap(method))
+        bean[bindType](el, eventName, selector, tap(method))
     
     } else {
-      bean.on(el, eventName, method)
+      bean[bindType](el, eventName, method)
       // Handle tap
       if (eventName === 'click')
-        bean.on(el, eventName, tap(method))
+        bean[bindType](el, eventName, tap(method))
     }
   }
   return this

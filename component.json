@@ -1,6 +1,6 @@
 {
   "name": "wagon",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repo": "compose-ui/wagon",
   "dependencies": {
     "lodash/lodash": "*",
