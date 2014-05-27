@@ -91,7 +91,7 @@ function eventDelegator(el, events){
 
     // Support CSS animation events
     if (eventName.indexOf('animation') === 0) {
-      cssEventName = cssAnimEventTypes[eventName.replace('animation', 0)]
+      cssEventName = cssAnimEventTypes[eventName.replace('animation', '')]
       if (!cssEventName)
         throw new Error('Event ' + eventName + ' is not supported.')
       else
