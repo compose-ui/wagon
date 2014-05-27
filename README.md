@@ -1,4 +1,4 @@
-# Wagon
+# Wagon [![Build Status](https://travis-ci.org/compose-ui/wagon.svg?branch=master)](https://travis-ci.org/compose-ui/wagon)
 
 Our own little Component Base class.
 
