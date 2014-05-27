@@ -6,19 +6,27 @@ var bean = require('bean')
 describe('wagon', function(){
   describe('.extend', function(){
     var SomeWagon, someInstance;
-    var buttonClicked = triggeredWagon = 0
+    var buttonClicked = triggeredWagon = aClicked = 0
     before(function(){
       SomeWagon = Wagon.extend({
         events: {
-          'click button': 'clickButton'
+          'click button': 'clickButton',
+          one: {
+            'click .one-event': 'clickA'
+          }
         },
         initialize: function(){
-          this.el = domify('<div class="wagon"><button></button></div>')
+          this.el = domify('<div class="wagon"><span class="one-event">one</span><button>button</button></div>')
           this.hotStuff = 'Wagon'
         },
         clickButton: function(event){
           event.preventDefault()
           buttonClicked++
+        },
+        clickA: function(event){
+          console.log('clickA!')
+          event.preventDefault()
+          aClicked++
         }
       }, {
         docEvents: {
@@ -53,11 +61,37 @@ describe('wagon', function(){
     describe('events binding', function(){
       before(function(){
         document.body.appendChild(someInstance.el)
-        bean.fire(someInstance.el.querySelector('button'), 'click')
       })
 
-      it('triggers the events', function(){
-        assert.equal(buttonClicked, 1)
+      describe('normal', function(){
+        before(function(){
+          bean.fire(someInstance.el.querySelector('button'), 'click')
+        })
+        it('triggers the event', function(){
+          assert.equal(buttonClicked, 1)
+        })
+      })
+
+      describe('one event', function(){
+        /*var aLink = null
+        before(function(){
+          aLink = someInstance.el.querySelector('.one-event')
+          console.log(aLink)
+          bean.fire(aLink, 'click')
+        })
+        it('it fired the event once', function(){
+          assert.equal(aClicked, 1)
+        })
+        describe('second trigger', function(){
+          before(function(){
+            bean.fire(aLink, 'click')
+          })
+          it('does not call the function', function(){
+            assert.equal(aClicked, 1)
+            assert.equal(location.hash, '#ugh')
+          })
+        })
+      */
       })
     })
 
