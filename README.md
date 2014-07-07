@@ -4,7 +4,7 @@ Our own little Component Base class.
 
 ## Installation
 
-- `component install compose-ui/wagon`
+- `npm install compose-ui/wagon`
 - `var Wagon = require('wagon')`
 
 ## Usage
