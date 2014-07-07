@@ -1,7 +1,7 @@
 var _ = require('lodash')
 var bean = require('bean')
 var tap = require('tap-event')
-var cssAnimEventTypes = require('css-animation-event-types')
+var animevent = require('animevent')
 
 module.exports = Wagon
 
@@ -95,7 +95,7 @@ function eventDelegator(el, events, type){
 
     // Support CSS animation events
     if (eventName.indexOf('animation') === 0) {
-      cssEventName = cssAnimEventTypes[eventName.replace('animation', '')]
+      cssEventName = animevent.types[eventName.replace('animation', '')]
       if (!cssEventName)
         throw new Error('Event ' + eventName + ' is not supported.')
       else
