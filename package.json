@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha-phantomjs test/index.html",
-    "pretest": "component install --dev && component build --dev"
+    "test": "mochify"
   },
   "author": "",
   "license": "MIT",
