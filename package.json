@@ -1,5 +1,5 @@
 {
-  "name": "wagon",
+  "name": "compose-wagon",
   "version": "1.0.0",
   "description": "An events manager.",
   "main": "index.js",
@@ -22,5 +22,8 @@
     "mocha": "^1.19.0",
     "mocha-phantomjs": "^3.4.1",
     "mochify": "^0.10.0"
+  },
+  "browser": {
+    "wagon": "compose-wagon"
   }
 }
