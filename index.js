@@ -1,7 +1,7 @@
 var _ = require('lodash')
 var bean = require('bean')
-var tap = require('tap-event')
-var animevent = require('animevent')
+var tap = require('compose-tap-event')
+var animevent = require('compose-animevent')
 
 module.exports = Wagon
 
