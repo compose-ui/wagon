@@ -1,6 +1,6 @@
 {
   "name": "compose-wagon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An events manager.",
   "main": "index.js",
   "scripts": {

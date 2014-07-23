@@ -11,6 +11,7 @@ var noop = function(){}
 
 function Wagon(options){
   this.options = (options || {})
+  this.el = (this.options.el || null)
   this.cid = _.uniqueId('c')
   this.initialize.apply(this, arguments)
   this.delegateEvents()
@@ -37,11 +38,7 @@ Wagon.prototype.remove = function(){
 }
 
 Wagon.extend = function(){
-  var child = extend.apply(this, arguments)
-  var docEvents = _.result(child, 'docEvents')
-  if (docEvents)
-    eventDelegator.call(child, document, docEvents)
-  return child
+  return extend.apply(this, arguments)
 }
 
 function extend(protoProps, staticProps){
@@ -107,7 +104,7 @@ function eventDelegator(el, events, type){
 
     var bindType = type ? type : 'on'
 
-    if (selector) {
+    if (selector !== "") {
       bean[bindType](el, eventName, selector, method)
       // Handle tap
       if (eventName === 'click')

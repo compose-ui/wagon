@@ -28,14 +28,6 @@ describe('wagon', function(){
           event.preventDefault()
           aClicked++
         }
-      }, {
-        docEvents: {
-          'click [data-trigger="wagon"]': 'triggerWagon'
-        },
-        triggerWagon: function(event){
-          event.preventDefault()
-          triggeredWagon++
-        }
       })
       someInstance = new SomeWagon({yo: 'dawg'})
     })
@@ -92,18 +84,6 @@ describe('wagon', function(){
           })
         })
       */
-      })
-    })
-
-    describe('document events binding', function(){
-      before(function(){
-        var html = domify('<a href="#" data-trigger="wagon">Wagon</a>')
-        document.body.appendChild(html)
-        bean.fire(html, 'click')
-      })
-
-      it('triggers the document event', function(){
-        assert.equal(triggeredWagon, 1)
       })
     })
   })
